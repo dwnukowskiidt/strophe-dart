@@ -1282,11 +1282,19 @@ class StropheConnection {
   ///  This is the last piece of the disconnection logic.  This resets the
   ///  connection and alerts the user's connection callback.
   ///
-  doDisconnect([condition]) {
-    return this._doDisconnect(condition);
+
+  set doDisconnect(Function([dynamic condition]) callback) {
+    _doDisconnectFunction = callback;
   }
 
-  void _doDisconnect([condition]) {
+  Function([dynamic condition]) get doDisconnect {
+    _doDisconnectFunction ??= _doDisconnect;
+    return _doDisconnectFunction;
+  }
+
+  void Function([dynamic condition]) _doDisconnectFunction;
+
+  void _doDisconnect([dynamic condition]) {
     if (this._idleTimeout != null) {
       this._idleTimeout.cancel();
     }
