@@ -47,8 +47,8 @@ class StropheHandler {
     this.type = ptype is List ? ptype : [ptype];
   }
 
-  factory StropheHandler.handler(Function handler, String ns, String name,
-      [type, String id, String from, Map options]) {
+  factory StropheHandler.handler(Function handler,
+      [String ns, String name, type, String id, String from, Map options]) {
     if (options != null) {
       options.putIfAbsent('matchBareFromJid', () => false);
       options.putIfAbsent('ignoreNamespaceFragment', () => false);

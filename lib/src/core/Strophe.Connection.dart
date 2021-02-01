@@ -1126,8 +1126,8 @@ class StropheConnection {
   /// Returns:
   /// A reference to the handler this can be used to remove it.
   ///
-  StropheHandler addHandler(Function handler, String ns, String name,
-      [dynamic type, String id, String from, options]) {
+  StropheHandler addHandler(Function handler,
+      [String ns, String name, dynamic type, String id, String from, options]) {
     StropheHandler hand =
         StropheHandler.handler(handler, ns, name, type, id, from, options);
     this.addHandlers.add(hand);
