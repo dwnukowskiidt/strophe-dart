@@ -1207,10 +1207,22 @@ class StropheConnection {
   /// Parameters:
   ///   (String) reason - The reason the disconnect is occuring.
   ///
-  disconnect([String reason = ""]) {
+
+  set disconnect(Function([String reason]) callback) {
+    _disconnectFunction = callback;
+  }
+
+  Function([String reason]) get disconnect {
+    _disconnectFunction ??= _disconnect;
+    return _disconnectFunction;
+  }
+
+  void Function([String reason]) _disconnectFunction;
+
+  void _disconnect([String reason = '']) {
     this._changeConnectStatus(Strophe.Status['DISCONNECTING'], reason);
 
-    Strophe.info("Disconnect was called because: " + reason);
+    Strophe.info('Disconnect was called because: ' + reason);
     if (this.connected) {
       StropheBuilder pres;
       this.disconnecting = true;
@@ -1226,7 +1238,7 @@ class StropheConnection {
       this._proto.disconnect(pres?.tree());
     } else {
       Strophe.info(
-          "Disconnect was called before Strophe connected to the server");
+          'Disconnect was called before Strophe connected to the server');
       this._proto.abortAllRequests();
       this._doDisconnect();
     }
