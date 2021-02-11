@@ -5,7 +5,7 @@ import 'package:strophe/src/utils.dart';
 class SHA1 {
   static const mask32 = 0xFFFFFFFF;
 
-  static Future<List<int>> core_sha1(List<int> chunk, int len) async {
+  static List<int> core_sha1(List<int> chunk, int len) {
     List<int> digest = List<int>(5);
     digest[0] = 0x67452301;
     digest[1] = 0xEFCDAB89;
@@ -111,7 +111,7 @@ class SHA1 {
  * Convert an 8-bit or 16-bit string to an array of big-endian words
  * In 8-bit function, characters >255 have their hi-byte silently ignored.
  */
-  static Future<List<int>> str2binb(String str) async {
+  static List<int> str2binb(String str) {
     List<int> bin = [];
     int mask = 255;
     int index;
@@ -148,7 +148,7 @@ class SHA1 {
 /*
  * Convert an array of big-endian words to a base-64 string
  */
-  static Future<String> binb2b64(List<int> binarray) async {
+  static String binb2b64(List<int> binarray) {
     String tab =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     String str = "";
@@ -176,8 +176,8 @@ class SHA1 {
     return binb2b64(await core_hmac_sha1(key, data));
   }
 
-  static Future<String> b64_sha1(String s) async {
-    return binb2b64(await core_sha1(await str2binb(s), s.length * 8));
+  static String b64_sha1(String s) {
+    return binb2b64(core_sha1(str2binb(s), s.length * 8));
   }
 
   static Future<String> str_hmac_sha1(String key, String data) async {
