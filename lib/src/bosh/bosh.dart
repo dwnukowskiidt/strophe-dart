@@ -104,7 +104,9 @@ class StropheBosh extends ServiceType {
     if (this.sid != null) {
       bodyWrap = bodyWrap.attrs({'sid': this.sid});
     }
-    if (this._conn.options['keepalive'] &&
+    if (this._conn.options != null &&
+        this._conn.options.isNotEmpty &&
+        this._conn.options['keepalive'] &&
         this._conn.sessionCachingSupported()) {
       this._cacheSession();
     }

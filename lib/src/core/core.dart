@@ -87,7 +87,7 @@ class Strophe {
   /// NS.XHTML_IM - XHTML-IM namespace from XEP 71.
   /// NS.XHTML - XHTML body namespace from XEP 71.
   /// TODO: use enums
-  static const Map<String, String> NS = {
+  static final Map<String, String> NS = {
     'HTTPBIND': "http://jabber.org/protocol/httpbind",
     'BOSH': "urn:xmpp:xbosh",
     'CLIENT': "jabber:client",
