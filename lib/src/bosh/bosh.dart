@@ -740,10 +740,12 @@ class StropheBosh extends ServiceType {
     try {
       contentType =
           this._conn.options['contentType'] ?? 'text/xml; charset=utf-8';
-      request = new http.Request('POST', Uri.parse(this._conn.service));
-      request.persistentConnection = this._conn.options['sync'] ? false : true;
+      request = http.Request('POST', Uri.parse(this._conn.service));
+      request.persistentConnection = (this._conn.options['sync'] == null)
+          ? false
+          : this._conn.options['sync'];
       request.headers['Content-Type'] = contentType;
-      if (this._conn.options['withCredentials']) {
+      if (this._conn.options['withCredentials'] ?? false) {
         request.headers['withCredentials'] = 'true';
       }
     } catch (e2) {
@@ -756,7 +758,7 @@ class StropheBosh extends ServiceType {
       this._conn.disconnect();
       return;
     }
-    req.date = new DateTime.now().millisecondsSinceEpoch;
+    req.date = DateTime.now().millisecondsSinceEpoch;
     if (this._conn.options['customHeaders'] != null) {
       Map<String, dynamic> headers = this._conn.options['customHeaders'];
       headers.forEach((key, value) {
