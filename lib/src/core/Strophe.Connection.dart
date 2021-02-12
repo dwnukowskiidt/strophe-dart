@@ -938,10 +938,10 @@ class StropheConnection {
     } else if (el is xml.XmlElement) {
       elem = el;
     }
-    String id = elem.getAttribute("id");
-    if (id == null && id.isNotEmpty) {
+    String id = elem.getAttribute('id');
+    if (id == null || id.isEmpty) {
       // inject id if not found
-      id = this.getUniqueId("sendIQ");
+      id = this.getUniqueId('sendIQ');
       elem.attributes
           .add(new xml.XmlAttribute(new xml.XmlName.fromString('id'), id));
     }
