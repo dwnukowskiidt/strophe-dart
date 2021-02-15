@@ -1492,7 +1492,7 @@ class StropheConnection {
   void Function(dynamic req, [Function _callback, String raw])
       _connectCbFunction;
 
-  void _connectCb(StropheRequest req, [Function _callback, String raw]) {
+  void _connectCb(dynamic req, [Function _callback, String raw]) {
     Strophe.info('_connect_cb was called');
     this.connected = true;
 
