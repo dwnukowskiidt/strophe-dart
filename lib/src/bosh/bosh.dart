@@ -193,7 +193,8 @@ class StropheBosh extends ServiceType {
   ///      should almost always be set to 1 (the default).
   ///    (Integer) wind - The optional HTTBIND window value.  This is the
   ///      allowed range of request ids that are valid.  The default is 5.
-  void _attach(
+  @override
+  void attach(
     String jid,
     String sid,
     int rid,
@@ -239,7 +240,8 @@ class StropheBosh extends ServiceType {
   ///   (Integer) wind - The optional HTTBIND window value.  This is the
   ///     allowed range of request ids that are valid.  The default is 5.
   ///
-  void _restore(
+  @override
+  void restore(
     String jid,
     Function callback,
     int wait,
@@ -263,7 +265,7 @@ class StropheBosh extends ServiceType {
             ((Strophe.getNodeFromJid(jid) == null) &&
                 (Strophe.getDomainFromJid(session.jid) == jid)))) {
       this._conn.restored = true;
-      this._attach(
+      this.attach(
           session.jid, session.sid, session.rid, callback, wait, hold, wind);
     } else {
       throw {
@@ -304,7 +306,8 @@ class StropheBosh extends ServiceType {
   ///  This handler is used to process the Bosh-part of the initial request.
   ///  Parameters:
   ///    (Request) bodyWrap - The received stanza.
-  _connectCb(xml.XmlElement bodyWrap) {
+  @override
+  int connectCb(xml.XmlElement bodyWrap) {
     String typ = bodyWrap.getAttribute("type");
     String cond;
     List<xml.XmlElement> conflict;
@@ -346,6 +349,7 @@ class StropheBosh extends ServiceType {
     if (inactivity?.isNotEmpty == true) {
       this.inactivity = int.parse(inactivity);
     }
+    return null;
   }
 
   /// PrivateFunction: _disconnect
@@ -353,7 +357,8 @@ class StropheBosh extends ServiceType {
   ///
   ///  Parameters:
   ///    (Request) pres - This stanza will be sent before disconnecting.
-  void _disconnect(xml.XmlElement pres) {
+  @override
+  void disconnect(xml.XmlElement pres) {
     this._sendTerminate(pres);
   }
 
@@ -361,7 +366,8 @@ class StropheBosh extends ServiceType {
   ///  _Private_ function to disconnect.
   ///
   ///  Resets the SID and RID.
-  void _doDisconnect() {
+  @override
+  void doDisconnect() {
     this.sid = null;
     this.rid = Random().nextInt(4294967295);
     if (this._conn.sessionCachingSupported()) {
@@ -376,7 +382,8 @@ class StropheBosh extends ServiceType {
   ///
   ///  Returns:
   ///    True, if there are no Requests queued, False otherwise.
-  bool _emptyQueue() {
+  @override
+  bool emptyQueue() {
     return this._requests.length == 0;
   }
 
@@ -437,14 +444,16 @@ class StropheBosh extends ServiceType {
   ///
   /// Cancels all remaining Requests and clears the queue.
   ///
-  void _onDisconnectTimeout() {
-    this._abortAllRequests();
+  @override
+  void onDisconnectTimeout() {
+    this.abortAllRequests();
   }
 
   /// PrivateFunction: _abortAllRequests
   /// _Private_ helper function that makes sure all pending requests are aborted.
   ///
-  void _abortAllRequests() {
+  @override
+  void abortAllRequests() {
     StropheRequest req;
     while (this._requests.length > 0) {
       req = this._requests.removeLast();
@@ -458,7 +467,8 @@ class StropheBosh extends ServiceType {
   ///
   /// Sends all queued Requests or polls with empty Request if there are none.
   ///
-  void _onIdle() {
+  @override
+  void onIdle() {
     var data = this._conn.data;
     // if no requests are in progress, poll
     if (this._conn.authenticated &&
@@ -703,7 +713,7 @@ class StropheBosh extends ServiceType {
         num backoff =
             min((Strophe.TIMEOUT * this.wait).floor(), pow(req.sends, 3)) *
                 1000;
-        new Timer(new Duration(milliseconds: backoff), () {
+        Timer(Duration(milliseconds: backoff), () {
           // XXX: setTimeout should be called only with function expressions (23974bc1)
           this._sendFunc(req);
         });
@@ -866,7 +876,8 @@ class StropheBosh extends ServiceType {
   ///
   /// Just triggers the RequestHandler to send the messages that are in the queue
   ///
-  void _send() {
+  @override
+  void send() {
     if (this._conn.idleTimeout != null) {
       this._conn.idleTimeout.cancel();
     }
@@ -874,7 +885,7 @@ class StropheBosh extends ServiceType {
 
     // XXX: setTimeout should be called only with function expressions (23974bc1)
     this._conn.idleTimeout = Timer(Duration(milliseconds: 100), () {
-      this._onIdle();
+      this.onIdle();
     });
   }
 
@@ -882,7 +893,8 @@ class StropheBosh extends ServiceType {
   ///
   /// Send an xmpp:restart stanza.
   ///
-  void _sendRestart() {
+  @override
+  void sendRestart() {
     this._throttledRequestHandler();
     if (this._conn.idleTimeout != null) {
       this._conn.idleTimeout.cancel();
