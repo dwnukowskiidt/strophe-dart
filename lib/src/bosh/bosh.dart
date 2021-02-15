@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:http/http.dart' as http;
 import 'package:strophe/src/bosh/Strophe.Request.dart';
@@ -703,6 +704,7 @@ class StropheBosh extends ServiceType {
           req.sends.toString() +
           ' posting\n${req.xmlData.toXmlString()}');
 
+      dev.log(req.xmlData.toXmlString());
 // TODO: bash.js line 733 review send command
 
       // Implement progressive backoff for reconnects --
