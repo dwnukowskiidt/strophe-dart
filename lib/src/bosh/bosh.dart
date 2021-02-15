@@ -701,7 +701,7 @@ class StropheBosh extends ServiceType {
           req.id.toString() +
           '.' +
           req.sends.toString() +
-          ' posting');
+          ' posting\n${req.xmlData.toXmlString()}');
 
 // TODO: bash.js line 733 review send command
 
@@ -768,6 +768,7 @@ class StropheBosh extends ServiceType {
       this._conn.disconnect();
       return;
     }
+
     req.date = DateTime.now().millisecondsSinceEpoch;
     if (this._conn.options['customHeaders'] != null) {
       Map<String, dynamic> headers = this._conn.options['customHeaders'];
