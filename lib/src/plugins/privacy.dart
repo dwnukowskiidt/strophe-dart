@@ -71,7 +71,7 @@ class PrivacyPlugin extends PluginClass {
         if (_lists[listName] != null)
           this.lists[listName] = _lists[listName];
         else
-          this.lists[listName] = new PrivacyList(listName, false);
+          this.lists[listName] = PrivacyList(listName, false);
         this.lists[listName]._isPulled = false;
       }
       List<XmlElement> activeNode = stanza.findAllElements("active").toList();
@@ -100,8 +100,7 @@ class PrivacyPlugin extends PluginClass {
   /// Returns:
   /// New list, or existing list if it exists.
   PrivacyList newList(String name) {
-    if (this.lists[name] == null)
-      this.lists[name] = new PrivacyList(name, true);
+    if (this.lists[name] == null) this.lists[name] = PrivacyList(name, true);
     return this.lists[name];
   }
 
@@ -120,7 +119,7 @@ class PrivacyPlugin extends PluginClass {
    */
   PrivacyItem newItem(String type, String value, String action, int order,
       List<String> blocked) {
-    PrivacyItem item = new PrivacyItem();
+    PrivacyItem item = PrivacyItem();
     item.type = type;
     item.value = value;
     item.action = action;
@@ -363,7 +362,7 @@ class PrivacyItem {
       if (["both", "to", "from", "none"].indexOf(this.value) < 0) return false;
     }
     if (["allow", "deny"].indexOf(this.action) < 0) return false;
-    bool hasMatch = new RegExp(r"^\d+$").hasMatch(this.order.toString());
+    bool hasMatch = RegExp(r"^\d+$").hasMatch(this.order.toString());
     if (this.order == 0 || !hasMatch) return false;
     if (this.blocked.length > 0) {
       //if(typeof(this.blocked) != "object") return false;
@@ -461,7 +460,7 @@ class PrivacyList {
     this.items = [];
     int l = list.items.length;
     for (int i = 0; i < l; ++i) {
-      this.items[i] = new PrivacyItem();
+      this.items[i] = PrivacyItem();
       this.items[i].copy(list.items[i]);
     }
   }

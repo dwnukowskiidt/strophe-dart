@@ -449,8 +449,8 @@ class StropheConnection {
   ///
   String getUniqueId([String suffix]) {
     String uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-        .replaceAllMapped(new RegExp(r"[xy]"), (Match c) {
-      int r = new Random().nextInt(16) | 0;
+        .replaceAllMapped(RegExp(r"[xy]"), (Match c) {
+      int r = Random().nextInt(16) | 0;
       int v = c.group(0) == 'x' ? r : r & 0x3 | 0x8;
       return v.toRadixString(16);
     });
@@ -874,8 +874,7 @@ class StropheConnection {
     if (id == null || id.isEmpty) {
       // inject id if not found
       id = this.getUniqueId("sendPresence");
-      elem.attributes
-          .add(new xml.XmlAttribute(new xml.XmlName.fromString('id'), id));
+      elem.attributes.add(xml.XmlAttribute(xml.XmlName.fromString('id'), id));
     }
 
     if (callback == null || errback == null) {
@@ -942,8 +941,7 @@ class StropheConnection {
     if (id == null || id.isEmpty) {
       // inject id if not found
       id = this.getUniqueId('sendIQ');
-      elem.attributes
-          .add(new xml.XmlAttribute(new xml.XmlName.fromString('id'), id));
+      elem.attributes.add(xml.XmlAttribute(xml.XmlName.fromString('id'), id));
     }
 
     if (onSuccess != null || onError != null) {
@@ -1013,7 +1011,7 @@ class StropheConnection {
     this._data.add("restart");
     this._proto.sendRestart();
     // XXX: setTimeout should be called only with function expressions (23974bc1)
-    this._idleTimeout = new Timer(new Duration(milliseconds: 100), () {
+    this._idleTimeout = Timer(Duration(milliseconds: 100), () {
       this._onIdle();
     });
   }
@@ -1712,7 +1710,7 @@ class StropheConnection {
   ///
   Future<bool> _saslChallengeCb(elem) async {
     String challenge =
-        new String.fromCharCodes(base64.decode(Strophe.getText(elem)));
+        String.fromCharCodes(base64.decode(Strophe.getText(elem)));
     String response = await this._saslMechanism.onChallenge(this, challenge);
     StropheBuilder stanza = Strophe.$build('response', {
       'xmlns': Strophe.NS['SASL'],
@@ -1776,8 +1774,8 @@ class StropheConnection {
     if (saslData != null && saslData.isNotEmpty) {
       String serverSignature;
       String success =
-          new String.fromCharCodes(base64.decode(Strophe.getText(elem)));
-      RegExp attribMatch = new RegExp(r"([a-z]+)=([^,]+)(,|$)");
+          String.fromCharCodes(base64.decode(Strophe.getText(elem)));
+      RegExp attribMatch = RegExp(r"([a-z]+)=([^,]+)(,|$)");
       Match matches = attribMatch.firstMatch(success);
       if (matches.group(1) == "v") {
         serverSignature = matches.group(2);

@@ -438,7 +438,7 @@ class RosterPlugin extends PluginClass {
     RosterItem item = this.findItem(jid);
     RosterItem previousItem;
     if (item == null) {
-      item = new RosterItem.fromMap({
+      item = RosterItem.fromMap({
         'name': name,
         'jid': jid,
         'subscription': subscription,
@@ -450,7 +450,7 @@ class RosterPlugin extends PluginClass {
         this.items.add(item);
       }
     } else {
-      previousItem = new RosterItem.fromMap({
+      previousItem = RosterItem.fromMap({
         'name': item.name,
         'subscription': item.subscription,
         'ask': item.ask,

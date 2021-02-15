@@ -186,7 +186,7 @@ class StropheSASLSHA1 extends StropheSASLMechanism {
       [String challenge, String testCnonce]) async {
     if (first && challenge?.isNotEmpty == true)
       return await this._onChallenge(connection, challenge);
-    Random random = new Random();
+    Random random = Random();
     String cnonce = testCnonce ??
         await MD5.hexdigest((random.nextDouble() * 1234567890).toString());
     String authStr = "n=" + Utils.utf16to8(connection.authcid);
@@ -284,9 +284,7 @@ class StropheSASLMD5 extends StropheSASLMechanism {
 
   String _quote(String str) {
     return '"' +
-        str
-            .replaceAll(new RegExp(r"\\"), "\\\\")
-            .replaceAll(new RegExp(r'"'), '\\"') +
+        str.replaceAll(RegExp(r"\\"), "\\\\").replaceAll(RegExp(r'"'), '\\"') +
         '"';
   }
 
@@ -300,10 +298,9 @@ class StropheSASLMD5 extends StropheSASLMechanism {
       challenge = '';
     }
     //if (testCnonce == null) testCnonce = '';
-    RegExp attribMatch = new RegExp(r'([a-z]+)=("[^"]+"|[^,"]+)(?:,|$)');
+    RegExp attribMatch = RegExp(r'([a-z]+)=("[^"]+"|[^,"]+)(?:,|$)');
     String cnonce = testCnonce ??
-        await MD5
-            .hexdigest((new Random().nextDouble() * 1234567890).toString());
+        await MD5.hexdigest((Random().nextDouble() * 1234567890).toString());
     String realm = "";
     String host;
     String nonce = "";

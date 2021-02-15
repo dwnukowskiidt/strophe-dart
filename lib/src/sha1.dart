@@ -76,17 +76,17 @@ class SHA1 {
       bkey = await core_sha1(bkey, key.length * 8);
     }
 
-    List<int> ipad = new List<int>(16), opad = new List<int>(16);
+    List<int> ipad = List<int>(16), opad = List<int>(16);
     int value;
     for (int i = 0; i < 16; i++) {
       value = i < bkey.length ? bkey[i] : 0;
       ipad[i] = value ^ 0x36363636;
       opad[i] = value ^ 0x5C5C5C5C;
     }
-    List<int> pad = new List<int>.from(ipad);
+    List<int> pad = List<int>.from(ipad);
     pad.addAll(await str2binb(data));
     List<int> hash = await core_sha1(pad, 512 + data.length * 8);
-    List<int> pod = new List.from(opad);
+    List<int> pod = List.from(opad);
     pod.addAll(hash);
     return core_sha1(pod, 512 + 160);
   }
@@ -138,8 +138,8 @@ class SHA1 {
     String str = "";
     int mask = 255;
     for (int i = 0; i < bin.length * 32; i += 8) {
-      //str += new String.fromCharCode((bin[i >> 5] >>> (24 - i % 32)) & mask);
-      str += new String.fromCharCode(
+      //str += String.fromCharCode((bin[i >> 5] >>> (24 - i % 32)) & mask);
+      str += String.fromCharCode(
           _zeroFillRightShift(bin[i >> 5], (24 - i % 32)) & mask);
     }
     return str;

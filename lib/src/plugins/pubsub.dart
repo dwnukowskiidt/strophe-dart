@@ -235,7 +235,7 @@ Extend connection object to have plugin name 'pubsub'.
       [String service, Map<String, dynamic> options, Function callback]) {
     String iqid = this.connection.getUniqueId("pubsubcreatenode");
     service = service != null && service.isNotEmpty ? service : this.service;
-    PubsubBuilder iq = new PubsubBuilder('iq', {
+    PubsubBuilder iq = PubsubBuilder('iq', {
       'from': Strophe.getBareJidFromJid(this.jid),
       'to': service,
       'type': 'set',
@@ -367,7 +367,7 @@ Extend connection object to have plugin name 'pubsub'.
     String jid = this.jid;
     if (barejid) jid = Strophe.getBareJidFromJid(jid);
     service = service != null && service.isNotEmpty ? service : this.service;
-    PubsubBuilder iq = new PubsubBuilder(
+    PubsubBuilder iq = PubsubBuilder(
             'iq', {'from': this.jid, 'to': service, 'type': 'set', 'id': iqid})
         .c('pubsub', {'xmlns': Strophe.NS['PUBSUB']}).c(
             'subscribe', {'node': node, 'jid': jid});
@@ -421,7 +421,7 @@ Extend connection object to have plugin name 'pubsub'.
       String node, List<Map<String, dynamic>> items, Function callback) {
     String iqid = this.connection.getUniqueId("pubsubpublishnode");
 
-    PubsubBuilder iq = new PubsubBuilder('iq', {
+    PubsubBuilder iq = PubsubBuilder('iq', {
       'from': this.jid,
       'to': this.service,
       'type': 'set',
@@ -592,7 +592,7 @@ Extend connection object to have plugin name 'pubsub'.
     for (int i = 0; i < atoms.length; i++) {
       atom = atoms[i];
 
-      atom['updated'] = atom['updated'] ?? new DateTime.now().toIso8601String();
+      atom['updated'] = atom['updated'] ?? DateTime.now().toIso8601String();
       if (atom['published'] && atom['published'].toIso8601String())
         atom['published'] = atom['published'].toIso8601String();
       PubsubBuilder data =

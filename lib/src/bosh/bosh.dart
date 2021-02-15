@@ -500,8 +500,8 @@ class StropheBosh extends ServiceType {
         }
       }
       this._conn.data = [];
-      StropheRequest req = new StropheRequest(
-          body.tree(), null, body.tree().getAttribute('rid'));
+      StropheRequest req =
+          StropheRequest(body.tree(), null, body.tree().getAttribute('rid'));
       req.func = () => this._onRequestStateChange(this._conn.dataRecv, req);
       req.origFunc = req.func;
       this._requests.add(req);
@@ -865,7 +865,7 @@ class StropheBosh extends ServiceType {
       body.cnode(pres.tree());
     }
     StropheRequest req =
-        new StropheRequest(body.tree(), null, body.tree().getAttribute('rid'));
+        StropheRequest(body.tree(), null, body.tree().getAttribute('rid'));
     req.func = () => this._onRequestStateChange(this._conn.dataRecv, req);
     req.origFunc = req.func;
     this._requests.add(req);

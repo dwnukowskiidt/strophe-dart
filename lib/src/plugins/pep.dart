@@ -38,7 +38,7 @@ class PepPlugin extends PluginClass {
     if (items is List<Map<String, dynamic>> || items is XmlNode) {
       if (callback != null)
         this.connection.addHandler(callback, null, 'iq', null, iqid, null);
-      PubsubBuilder c = new PubsubBuilder(
+      PubsubBuilder c = PubsubBuilder(
               'iq', {'from': this.connection.jid, 'type': 'set', 'id': iqid})
           .c('pubsub', {'xmlns': Strophe.NS['PUBSUB']}).c(
               'publish', {'node': node, 'jid': this.connection.jid});

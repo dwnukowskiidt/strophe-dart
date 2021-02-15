@@ -34,14 +34,14 @@ class Utils {
     for (int i = 0; i < len; i++) {
       c = str.codeUnitAt(i);
       if ((c >= 0x0000) && (c <= 0x007F)) {
-        out += new String.fromCharCode(str.codeUnitAt(i));
+        out += String.fromCharCode(str.codeUnitAt(i));
       } else if (c > 0x07FF) {
-        out += new String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
-        out += new String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
-        out += new String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
       } else {
-        out += new String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
-        out += new String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
       }
     }
     return out;
@@ -69,7 +69,7 @@ class Utils {
         domain = cookieObj.domain ?? '';
         path = cookieObj.path ?? '';
       }
-      Cookie cookie = new Cookie(cookieName, cookieValue);
+      Cookie cookie = Cookie(cookieName, cookieValue);
       cookie.domain = domain;
       cookie.expires = expires;
       cookie.path = path;

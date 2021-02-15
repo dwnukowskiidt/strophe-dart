@@ -147,7 +147,7 @@ class StropheBuilder {
             .nodeTree
             .firstChild
             .attributes
-            .add(new xml.XmlAttribute(new xml.XmlName.fromString(key), value));
+            .add(xml.XmlAttribute(xml.XmlName.fromString(key), value));
       }
     });
     return this;
@@ -223,7 +223,7 @@ class StropheBuilder {
     for (int i = 1; i < this.node.length; i++) {
       currentNode = currentNode.children[this.node[i]];
     }
-    currentNode.children.add(Strophe.copyElement(new xml.XmlText(text ?? '')));
+    currentNode.children.add(Strophe.copyElement(xml.XmlText(text ?? '')));
     return this;
   }
 

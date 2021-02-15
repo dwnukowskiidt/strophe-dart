@@ -102,8 +102,7 @@ class MucPlugin extends PluginClass {
             for (int i = 0, len = xquery.length; i < len; i++) {
               x = xquery[i];
               xmlns = x.getAttribute("xmlns");
-              if (xmlns != null &&
-                  new RegExp(Strophe.NS['MUC']).hasMatch(xmlns)) {
+              if (xmlns != null && RegExp(Strophe.NS['MUC']).hasMatch(xmlns)) {
                 if (roomAt != null) handlers = roomAt._presence_handlers;
                 break;
               }
@@ -119,7 +118,7 @@ class MucPlugin extends PluginClass {
       }, null, null);
     }
     if (this.rooms[room] == null) {
-      this.rooms[room] = new XmppRoom(this, room, nick, password);
+      this.rooms[room] = XmppRoom(this, room, nick, password);
       if (presHandlerCb != null) {
         this.rooms[room].addHandler('presence', presHandlerCb);
       }
@@ -859,7 +858,7 @@ class XmppRoom {
    */
 
   Occupant _addOccupant(Map<String, dynamic> data) {
-    Occupant occ = new Occupant(data, this);
+    Occupant occ = Occupant(data, this);
     this.roster[occ.nick] = occ;
     return occ;
   }

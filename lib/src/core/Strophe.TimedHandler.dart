@@ -32,7 +32,7 @@ class StropheTimedHandler {
   StropheTimedHandler(int period, Function handler) {
     this.period = period;
     this.handler = handler;
-    this.lastCalled = new DateTime.now().millisecondsSinceEpoch;
+    this.lastCalled = DateTime.now().millisecondsSinceEpoch;
   }
 
   /// PrivateFunction: run
@@ -43,7 +43,7 @@ class StropheTimedHandler {
   ///      otherwise.
   ///
   bool run() {
-    this.lastCalled = new DateTime.now().millisecondsSinceEpoch;
+    this.lastCalled = DateTime.now().millisecondsSinceEpoch;
     return this.handler();
   }
 
@@ -51,7 +51,7 @@ class StropheTimedHandler {
   ///  Reset the last called time for the Strophe.TimedHandler.
   ///
   void reset() {
-    this.lastCalled = new DateTime.now().millisecondsSinceEpoch;
+    this.lastCalled = DateTime.now().millisecondsSinceEpoch;
   }
 
   /// PrivateFunction: toString

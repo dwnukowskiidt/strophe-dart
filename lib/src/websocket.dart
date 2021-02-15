@@ -234,7 +234,7 @@ class StropheWebSocket extends ServiceType {
     if (message.trim().indexOf("<open ") == 0 ||
         message.trim().indexOf("<?xml") == 0) {
       // Strip the XML Declaration, if there is one
-      String data = message.replaceAll(new RegExp(r"^(<\?.*?\?>\s*)*"), "");
+      String data = message.replaceAll(RegExp(r"^(<\?.*?\?>\s*)*"), "");
       if (data == '') return;
 
       xml.XmlDocument streamStart = xml.XmlDocument.parse(data);
