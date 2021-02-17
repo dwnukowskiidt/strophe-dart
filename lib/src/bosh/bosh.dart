@@ -697,7 +697,7 @@ class StropheBosh extends ServiceType {
       req = this._requests[i];
     }
 
-    if (req.response == null) {
+    if (req.response == null && req.date == null) {
       // Strophe.debug('request id ' +
       //     req.id.toString() +
       //     '.' +
