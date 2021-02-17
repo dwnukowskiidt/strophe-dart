@@ -159,7 +159,7 @@ class DiscoPlugin extends PluginClass {
       XmlElement stanza, Map<String, String> queryAttrs) {
     String id = stanza.getAttribute('id');
     String from = stanza.getAttribute('from');
-    StropheBuilder iqresult = Strophe.$iq({'type': 'result', id: id});
+    StropheBuilder iqresult = Strophe.$iq({'type': 'result', 'id': id});
 
     if (from != null) {
       iqresult.attrs({'to': from});
