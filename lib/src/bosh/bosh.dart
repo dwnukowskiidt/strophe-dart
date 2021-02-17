@@ -818,7 +818,7 @@ class StropheBosh extends ServiceType {
   /// Parameters:
   ///   (Integer) i - The index of the request in the queue.
   ///
-  void _restartRequest(i) {
+  void _restartRequest(int i) {
     var req = this._requests[i];
     if (req.dead == null) {
       req.dead = DateTime.now().millisecondsSinceEpoch;
