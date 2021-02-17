@@ -698,13 +698,17 @@ class StropheBosh extends ServiceType {
     }
 
     if (req.response == null) {
-      Strophe.debug('request id ' +
+      // Strophe.debug('request id ' +
+      //     req.id.toString() +
+      //     '.' +
+      //     req.sends.toString() +
+      //     ' posting\n${req.xmlData.toXmlString()}');
+
+      dev.log('request id ' +
           req.id.toString() +
           '.' +
           req.sends.toString() +
           ' posting\n${req.xmlData.toXmlString()}');
-
-      dev.log(req.xmlData.toXmlString());
 // TODO: bash.js line 733 review send command
 
       // Implement progressive backoff for reconnects --
