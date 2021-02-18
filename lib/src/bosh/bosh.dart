@@ -540,7 +540,7 @@ class StropheBosh extends ServiceType {
   ///
   int _getRequestStatus(StropheRequest req, [num def]) {
     int reqStatus;
-    if (req.response != null) {
+    if (req.xhr.readyState == ReadyState.done) {
       try {
         reqStatus = req.response.statusCode;
       } catch (e) {
@@ -573,14 +573,12 @@ class StropheBosh extends ServiceType {
         '.' +
         req.sends.toString() +
         ' state changed to ' +
-        (req.response != null ? req.response.statusCode.toString() : '0'));
+        req.xhr.readyState.toString());
     if (req.abort) {
       req.abort = false;
       return;
     }
-    if (req.response != null &&
-        req.response.statusCode != 200 &&
-        req.response.statusCode != 304) {
+    if (req.xhr.readyState != ReadyState.done) {
       // The request is not yet complete
       return;
     }
@@ -677,13 +675,14 @@ class StropheBosh extends ServiceType {
       return;
     }
 
-    var timeElapsed = req.age();
-    var primaryTimeout = (timeElapsed is num &&
+    num timeElapsed = req.age();
+    bool primaryTimeout = (timeElapsed is num &&
         timeElapsed > (Strophe.TIMEOUT * this.wait).floor());
-    var secondaryTimeout = (req.dead != null &&
+    bool secondaryTimeout = (req.dead != null &&
         req.timeDead() > (Strophe.SECONDARY_TIMEOUT * this.wait).floor());
-    var requestCompletedWithServerError =
-        (req.response != null && (reqStatus < 1 || reqStatus >= 500));
+    bool requestCompletedWithServerError =
+        (req.xhr.readyState == ReadyState.done &&
+            (reqStatus < 1 || reqStatus >= 500));
     if (primaryTimeout || secondaryTimeout || requestCompletedWithServerError) {
       if (secondaryTimeout) {
         Strophe.error('Request ' +
@@ -744,7 +743,7 @@ class StropheBosh extends ServiceType {
       Strophe.debug('_processRequest: ' +
           (i == 0 ? 'first' : 'second') +
           ' request has readyState of ' +
-          (req.response != null ? req.response.reasonPhrase : '0'));
+          req.xhr.readyState.toString());
     }
   }
 
