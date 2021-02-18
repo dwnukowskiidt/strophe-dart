@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:html';
+import 'dart:typed_data';
+
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:strophe/src/core/core.dart';
 import 'package:xml/xml.dart';
@@ -121,3 +126,20 @@ class StropheRequest {
     return http.Client();
   }
 }
+
+/// This is to match only the XMLHttpRequest.readyState that are used in JS code
+/// https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
+enum ReadyState {
+  unsent,
+  sent, // In theory this corrisponds to HEADERS_RECEIVED state
+  done,
+}
+
+// class StropheHttpClient extends http.BaseClient {
+//   ReadyState readyState = ReadyState.unsent;
+
+//   @override
+//   Future<http.StreamedResponse> send(http.BaseRequest request) {
+//     super.send(request);
+//   }
+// }
