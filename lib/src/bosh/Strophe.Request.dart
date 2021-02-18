@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:html';
-import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:strophe/src/core/core.dart';
 import 'package:xml/xml.dart';
 
@@ -46,7 +42,7 @@ class StropheRequest {
 
   int dead;
 
-  http.Client xhr;
+  StropheHttpClient xhr;
   http.Response response;
 
   StropheRequest(XmlElement elem, Function func, String rid, [int sends]) {
@@ -122,8 +118,8 @@ class StropheRequest {
   /// Returns:
   ///   A new XMLHttpRequest.
   ///
-  http.Client _newXHR() {
-    return http.Client();
+  StropheHttpClient _newXHR() {
+    return StropheHttpClient();
   }
 }
 
@@ -135,11 +131,6 @@ enum ReadyState {
   done,
 }
 
-// class StropheHttpClient extends http.BaseClient {
-//   ReadyState readyState = ReadyState.unsent;
-
-//   @override
-//   Future<http.StreamedResponse> send(http.BaseRequest request) {
-//     super.send(request);
-//   }
-// }
+class StropheHttpClient extends IOClient {
+  ReadyState readyState = ReadyState.unsent;
+}

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'dart:developer' as dev;
+import 'dart:math';
 
 import 'package:http/http.dart' as http;
 import 'package:strophe/src/bosh/Strophe.Request.dart';
@@ -697,7 +697,7 @@ class StropheBosh extends ServiceType {
       req = this._requests[i];
     }
 
-    if (req.response == null && req.date == null) {
+    if (req.xhr.readyState == ReadyState.unsent) {
       // Strophe.debug('request id ' +
       //     req.id.toString() +
       //     '.' +
@@ -784,8 +784,10 @@ class StropheBosh extends ServiceType {
     }
 
     request.body = req.data;
+    req.xhr.readyState = ReadyState.sent;
     req.xhr.send(request).then(
       (http.StreamedResponse response) async {
+        req.xhr.readyState = ReadyState.done;
         print('The raw response: $response');
         print('The raw status code: ${response.statusCode}');
         req.response = await http.Response.fromStream(response);
