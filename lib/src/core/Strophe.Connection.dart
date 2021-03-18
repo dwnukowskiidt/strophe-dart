@@ -931,7 +931,7 @@ class StropheConnection {
     int timeout,
   ]) {
     StropheTimedHandler timeoutHandler;
-    xml.XmlElement elem = el;
+    xml.XmlElement elem;
     if (el is xml.XmlDocument) {
       elem = el.rootElement;
     } else if (el is xml.XmlElement) {
