@@ -1278,7 +1278,7 @@ class StropheConnection {
         if (connectCallback != null)
           this.connectCallback(status, condition, elem);
       } catch (e) {
-        if (e is Error) Strophe.handleError(e);
+        Strophe.handleError(e);
         Strophe.error("User connection callback caused an " +
             "exception: " +
             e.toString());

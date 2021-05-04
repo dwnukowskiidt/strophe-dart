@@ -1,8 +1,7 @@
-import 'package:xml/xml.dart' as xml;
-
 import 'package:strophe/src/core/Strophe.Builder.dart';
 import 'package:strophe/src/core/Strophe.SASLMechanism.dart';
 import 'package:strophe/src/plugins/plugins.dart';
+import 'package:xml/xml.dart' as xml;
 
 /// Class: Strophe
 /// An object container for all Strophe library functions.
@@ -687,18 +686,14 @@ class Strophe {
 
   /// PrivateFunction: _handleError
   ///  _Private_ function that properly logs an error to the console
-  static handleError(Error e) {
-    if (e.stackTrace != null) {
-      Strophe.fatal(e.stackTrace.toString());
-    }
-    if (e.toString() != null) {
-      Strophe.fatal("error: " +
-          e.hashCode.toString() +
-          " - " +
-          e.runtimeType.toString() +
-          ": " +
-          e.toString());
-    }
+  static handleError(Exception e) {
+    Strophe.fatal("error: " +
+        e.hashCode.toString() +
+        " - " +
+        e.runtimeType.toString() +
+        ": " +
+        e.toString() +
+        StackTrace.current.toString());
   }
 
   /// Function: log
