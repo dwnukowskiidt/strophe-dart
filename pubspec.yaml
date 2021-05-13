@@ -6,10 +6,10 @@ homepage: https://github.com/developerandre/strophe-dart
 
 dependencies:
   # https://pub.dev/packages/xml
-  xml: 4.5.1
+  xml: 5.1.0
 
   # https://pub.dev/packages/http
-  http: 0.12.2
+  http: 0.13.3
 
   flutter:
     sdk: flutter
