@@ -32,7 +32,7 @@ class StropheRequest {
 
   Function func;
 
-  num date;
+  DateTime date;
 
   String rid;
 
@@ -63,19 +63,19 @@ class StropheRequest {
   }
 
   num age() {
-    if (this.date == null || this.date == 0) {
+    if (this.date == null) {
       return 0;
     }
-    int now = DateTime.now().millisecondsSinceEpoch;
-    return (now - this.date) / 1000;
+    DateTime now = DateTime.now();
+    return (now.difference(this.date)).inMilliseconds / 1000;
   }
 
   num timeDead() {
     if (this.dead == null) {
       return 0;
     }
-    int now = DateTime.now().millisecondsSinceEpoch;
-    return (now - this.dead) / 1000;
+    DateTime now = DateTime.now();
+    return (now.difference(this.date)).inMilliseconds / 1000;
   }
 
   /// PrivateFunction: getResponse

@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:http/http.dart' as http;
+import 'package:stack_trace/stack_trace.dart';
 import 'package:strophe/src/bosh/Strophe.Request.dart';
 import 'package:strophe/src/core/ServiceType.dart';
 import 'package:strophe/src/core/Strophe.Builder.dart';
@@ -774,7 +775,7 @@ class StropheBosh extends ServiceType {
       return;
     }
 
-    req.date = DateTime.now().millisecondsSinceEpoch;
+    req.date = DateTime.now();
     if (this._conn.options['customHeaders'] != null) {
       Map<String, dynamic> headers = this._conn.options['customHeaders'];
       headers.forEach((key, value) {
