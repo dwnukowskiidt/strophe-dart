@@ -4,7 +4,6 @@ import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:http/http.dart' as http;
-import 'package:stack_trace/stack_trace.dart';
 import 'package:strophe/src/bosh/Strophe.Request.dart';
 import 'package:strophe/src/core/ServiceType.dart';
 import 'package:strophe/src/core/Strophe.Builder.dart';
