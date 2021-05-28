@@ -1887,7 +1887,7 @@ class StropheConnection {
   bool _saslBindCb(xml.XmlElement elem) {
     if (elem.getAttribute("type") == "error") {
       Strophe.info("SASL binding failed.");
-      List<xml.XmlElement> conflict = elem.findAllElements("conflict");
+      List<xml.XmlElement> conflict = elem.findAllElements("conflict").toList();
       String condition;
       if (conflict.length > 0) {
         condition = Strophe.ErrorCondition['CONFLICT'];
