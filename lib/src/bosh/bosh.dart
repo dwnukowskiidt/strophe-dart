@@ -316,7 +316,7 @@ class StropheBosh extends ServiceType {
       // an error occurred
       cond = bodyWrap.getAttribute("condition");
       Strophe.error("BOSH-Connection failed: " + cond);
-      conflict = bodyWrap.findAllElements("conflict");
+      conflict = bodyWrap.findAllElements("conflict").toList();
       if (cond != null) {
         if (cond == "remote-stream-error" && conflict.length > 0) {
           cond = "conflict";
