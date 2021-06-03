@@ -1252,13 +1252,14 @@ class StropheConnection {
 //    (String) condition - the error condition or null
 //    (XMLElement) elem - The triggering stanza.
 //
-  changeConnectStatus(int status, [String condition, xml.XmlNode elem]) {
+  void changeConnectStatus(int status, [String condition, xml.XmlNode elem]) {
     this._changeConnectStatus(status, condition, elem);
   }
 
-  _changeConnectStatus(int status, [String condition, xml.XmlNode elem]) {
+  void _changeConnectStatus(int status, [String condition, xml.XmlNode elem]) {
     // notify all plugins listening for status changes
-    Strophe.connectionPlugins.forEach((String key, PluginClass plugin) {
+    for (var key in Strophe.connectionPlugins.keys) {
+      final plugin = Strophe.connectionPlugins[key];
       if (plugin.statusChanged != null) {
         try {
           plugin.statusChanged(status, condition);
@@ -1270,7 +1271,7 @@ class StropheConnection {
               err);
         }
       }
-    });
+    }
 
     // notify the user's callback
     if (this.connectCallback != null) {
@@ -1346,11 +1347,11 @@ class StropheConnection {
   ///   (Strophe.Request) req - The request this has data ready.
   ///   (string) req - The stanza a raw string (optiona).
   ///
-  dataRecv(req, [String raw]) {
+  void dataRecv(req, [String raw]) {
     this._dataRecv(req, raw);
   }
 
-  _dataRecv(req, [String raw]) {
+  void _dataRecv(req, [String raw]) {
     Strophe.info("_dataRecv called");
     xml.XmlElement elem = this._proto.reqToData(req);
     if (elem == null) {
