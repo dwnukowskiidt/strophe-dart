@@ -40,15 +40,22 @@ class StropheHandler {
   String name;
   List<String> type; // String or List
   String id;
-  Map options;
+  Map<String, dynamic> options;
 
   StropheHandler(
       this.handler, this.ns, this.name, ptype, this.id, this.options) {
     this.type = ptype is List ? ptype : [ptype];
   }
 
-  factory StropheHandler.handler(Function handler,
-      [String ns, String name, type, String id, String from, Map options]) {
+  factory StropheHandler.handler(
+    Function handler, [
+    String ns,
+    String name,
+    type,
+    String id,
+    String from,
+    Map<String, dynamic> options,
+  ]) {
     if (options != null) {
       options.putIfAbsent('matchBareFromJid', () => false);
       options.putIfAbsent('ignoreNamespaceFragment', () => false);
