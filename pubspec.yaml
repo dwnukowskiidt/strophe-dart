@@ -6,7 +6,7 @@ homepage: https://github.com/developerandre/strophe-dart
 
 dependencies:
   # https://pub.dev/packages/xml
-  xml: 5.1.1
+  xml: 5.1.2
 
   # https://pub.dev/packages/http
   http: 0.13.3
