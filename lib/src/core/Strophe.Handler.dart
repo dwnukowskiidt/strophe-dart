@@ -101,9 +101,8 @@ class StropheHandler {
     xml.XmlElement elem =
         node is xml.XmlDocument ? node.rootElement : node as xml.XmlElement;
     String elNamespace = elem.getAttribute("xmlns") ?? '';
-    if (elNamespace != null &&
-        elNamespace.isNotEmpty &&
-        this.options['ignoreNamespaceFragment']) {
+    if (elNamespace?.isNotEmpty == true &&
+        this.options['ignoreNamespaceFragment'] == true) {
       elNamespace = elNamespace.split('#')[0];
     }
     return elNamespace;
@@ -123,8 +122,8 @@ class StropheHandler {
     if (this.ns == null || this.ns.isEmpty) {
       return true;
     } else {
-      Strophe.forEachChild(elem, null, (child) {
-        if (this.getNamespace(child) == this.ns) {
+      Strophe.forEachChild(elem, null, (elem) {
+        if (this.getNamespace(elem) == this.ns) {
           nsMatch = true;
         }
       });
@@ -146,8 +145,8 @@ class StropheHandler {
     xml.XmlElement elem =
         node is xml.XmlDocument ? node.rootElement : node as xml.XmlElement;
     String from = elem.getAttribute("from");
-    if (this.options['matchBareFromJid']) {
-      from = Strophe.getBareJidFromJid(from); // todo: getBareJidFromJid
+    if (this.options['matchBareFromJid'] == true) {
+      from = Strophe.getBareJidFromJid(from);
     }
 
     String id = elem.getAttribute("id");
