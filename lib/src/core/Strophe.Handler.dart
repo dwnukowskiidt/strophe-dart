@@ -149,9 +149,9 @@ class StropheHandler {
       from = Strophe.getBareJidFromJid(from);
     }
 
-    String id = elem.getAttribute("id");
-
     // TODO: this code below in not from the JS lib
+    /*
+    var id = elem.getAttribute("id");
     bool withId = false;
     if (this.options['endsWithId'] == true) {
       withId = (id ?? '').endsWith(this.id);
@@ -159,20 +159,18 @@ class StropheHandler {
     if (this.options['startsWithId'] == true) {
       withId = (id ?? '').startsWith(this.id);
     }
+    */
     // TODO: ends here
 
     String elemType = elem.getAttribute("type");
-    bool statement = this.type.indexOf(elemType) != -1;
     if (this.namespaceMatch(elem) &&
-        (this.name == null ||
-            this.name.isEmpty ||
+        ((this.name == null || this.name.isEmpty) ||
             Strophe.isTagEqual(elem, this.name)) &&
-        (this.type == null ||
-            this.type.isEmpty ||
-            this.type.contains(elemType) == false ||
-            statement) &&
-        (this.id == null || this.id.isEmpty || id == this.id || withId) &&
-        (this.from == null || this.from.isEmpty || from == this.from)) {
+        ((this.type == null || this.type.isEmpty) ||
+            this.type.contains(elemType) == true) &&
+        ((this.id == null || this.id.isEmpty) ||
+            elem.getAttribute("id") == this.id) &&
+        ((this.from == null || this.from.isEmpty) || from == this.from)) {
       return true;
     }
     return false;
