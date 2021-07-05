@@ -1440,8 +1440,9 @@ class StropheConnection {
         // encapsulate 'handler.run' not to lose the whole handler list if
         // one of the handlers throws an exception
         try {
-          if (hand.isMatch(child) && (this.authenticated || !hand.user)) {
-            if (hand.run(child)) {
+          if (hand.isMatch(child) == true &&
+              (this.authenticated == true || hand.user != true)) {
+            if (hand.run(child) == true) {
               this.handlers.add(hand);
             }
           } else {

@@ -140,7 +140,7 @@ class StropheHandler {
         node is xml.XmlDocument ? node.rootElement : node as xml.XmlElement;
     String from = elem.getAttribute("from");
     if (this.options['matchBareFromJid']) {
-      from = Strophe.getBareJidFromJid(from);
+      from = Strophe.getBareJidFromJid(from); // todo: getBareJidFromJid
     }
 
     String id = elem.getAttribute("id");
@@ -158,10 +158,15 @@ class StropheHandler {
     String elemType = elem.getAttribute("type");
     bool statement = this.type.indexOf(elemType) != -1;
     if (this.namespaceMatch(elem) &&
-        (this.name == null || Strophe.isTagEqual(elem, this.name)) &&
-        (this.type == null || this.type.contains(null) || statement) &&
-        (this.id == null || id == this.id || withId) &&
-        (this.from == null || from == this.from)) {
+        (this.name == null ||
+            this.name.isEmpty ||
+            Strophe.isTagEqual(elem, this.name)) &&
+        (this.type == null ||
+            this.type.isEmpty ||
+            this.type.contains(elemType) == false ||
+            statement) &&
+        (this.id == null || this.id.isEmpty || id == this.id || withId) &&
+        (this.from == null || this.from.isEmpty || from == this.from)) {
       return true;
     }
     return false;
