@@ -310,17 +310,22 @@ class Strophe {
     var childNode;
     for (int i = 0; i < elem.children.length; i++) {
       try {
-        if (elem.children.elementAt(i) is xml.XmlElement)
+        if (elem.children.elementAt(i) is xml.XmlElement) {
           childNode = elem.children.elementAt(i);
-        else if (elem.children.elementAt(i) is xml.XmlDocument)
+        } else if (elem.children.elementAt(i) is xml.XmlDocument) {
           childNode =
               (elem as xml.XmlDocument).rootElement.children.elementAt(i);
+        }
       } catch (e) {
         childNode = null;
       }
-      if (childNode == null) continue;
+      if (childNode == null) {
+        continue;
+      }
       if (childNode.nodeType == xml.XmlNodeType.ELEMENT &&
-          (elemName == null || isTagEqual(childNode, elemName))) {
+          (elemName == null ||
+              elemName.isEmpty ||
+              isTagEqual(childNode, elemName))) {
         func(childNode);
       }
     }
